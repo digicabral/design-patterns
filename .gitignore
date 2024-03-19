@@ -1,0 +1,14 @@
+node_modules
+.env
+
+$RECYCLE.BIN/
+
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+*.parcel-cache
+dist
