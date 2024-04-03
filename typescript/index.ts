@@ -7,21 +7,17 @@ class BlogPost {
     this.content = content;
   }
 
-  // Methods related to content management
-  createPost() {
-    // Implementation here
-  }
+  public createPost(): void {}
 
-  updatePost() {
-    // Implementation here
-  }
+  public updatePost(): void {}
 
-  deletePost() {
-    // Implementation here
-  }
+  public deletePost(): void {}
+}
 
-  // Method related to post display
-  displayHTML() {
-    return `<h1>${this.title}</h1><p>${this.content}</p>`;
+class BlogPostDisplay {
+  constructor(public blogPost: BlogPost) {}
+
+  public displayHTML() {
+    return `<h1>${this.blogPost.title}</h1><p>${this.blogPost.content}<p>`;
   }
 }
