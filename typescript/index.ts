@@ -1,31 +1,47 @@
-interface Printer {
-  print(document: Document): void;
+// Creating a post
+// comment a post
+// share post
+// Admin user - can do the 3 operations
+// Regular user - can only share and comment a post
+interface Post {
+  title: string;
+  content: string;
 }
 
-interface Scanner {
-  scan(document: Document): void;
+interface Comment {
+  title: string;
+  content: string;
 }
 
-interface Fax {
-  fax(document: Document): void;
+interface CreatePost {
+  create(post: Post): void;
 }
 
-class MultifunctionPrinter implements Printer, Scanner, Fax {
-  print(document: Document): void {
-    console.log("The machine is printing " + document);
+interface CommentPost {
+  comment(comment: Comment): void;
+}
+
+interface SharePost {
+  share(post: Post): void;
+}
+
+class AdminUser implements CreatePost, CommentPost, SharePost {
+  create(post: Post): void {
+    throw new Error("Method not implemented.");
   }
-  scan(document: Document): void {
-    console.log("The machine is scanning " + document);
+  comment(comment: Comment): void {
+    throw new Error("Method not implemented.");
   }
-  fax(document: Document): void {
-    console.log("The machine is sending a fax " + document);
+  share(post: Post): void {
+    throw new Error("Method not implemented.");
   }
 }
 
-// This way we are creating a simple interface for each kind of device
-// And the simple printer is not forced to implement methods that wont be used
-class SimplePrinter implements Printer {
-  print(document: Document): void {
-    console.log("The machine is printing " + document);
+class RegularUser implements SharePost, CommentPost {
+  share(post: Post): void {
+    throw new Error("Method not implemented.");
+  }
+  comment(post: Comment): void {
+    throw new Error("Method not implemented.");
   }
 }
