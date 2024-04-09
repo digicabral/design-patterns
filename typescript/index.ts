@@ -1,10 +1,16 @@
-interface Machine {
+interface Printer {
   print(document: Document): void;
+}
+
+interface Scanner {
   scan(document: Document): void;
+}
+
+interface Fax {
   fax(document: Document): void;
 }
 
-class MultifunctionPrinter implements Machine {
+class MultifunctionPrinter implements Printer, Scanner, Fax {
   print(document: Document): void {
     console.log("The machine is printing " + document);
   }
@@ -16,5 +22,10 @@ class MultifunctionPrinter implements Machine {
   }
 }
 
-// Imagine that now I wanted to implement a simple printer: it wouldnt be possible, because we are forced to implement the 3 methods
-// In this case we are violating the ISP principle
+// This way we are creating a simple interface for each kind of device
+// And the simple printer is not forced to implement methods that wont be used
+class SimplePrinter implements Printer {
+  print(document: Document): void {
+    console.log("The machine is printing " + document);
+  }
+}
