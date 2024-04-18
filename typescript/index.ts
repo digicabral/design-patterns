@@ -1,77 +1,76 @@
-interface Builder {
-  setPartA(): void;
-  setPartB(): void;
-  setPartC(): void;
+interface ICostumer {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber: string;
 }
 
-class Product {
-  private parts: string[] = [];
-
-  public add(part: string): void {
-    this.parts.push(part);
-  }
-
-  public listParts(): void {
-    console.log(`Product parts: ${this.parts.join(", ")}`);
-  }
+interface ICostumerBuilder {
+  setFirstName(firstName: string): ICostumerBuilder;
+  setLastName(lastName: string): ICostumerBuilder;
+  setEmail(email: string): ICostumerBuilder;
+  setPhoneNumber(phoneNumber: string): ICostumerBuilder;
+  build(): ICostumer;
 }
 
-class ConcreteBuilder implements Builder {
-  private product!: Product;
-
-  constructor() {
-    this.reset();
-  }
-
-  public reset(): void {
-    this.product = new Product();
-  }
-
-  public setPartA(): void {
-    this.product.add("PartA");
-  }
-
-  public setPartB(): void {
-    this.product.add("PartB");
-  }
-
-  public setPartC(): void {
-    this.product.add("PartC");
-  }
-
-  public getProduct(): Product {
-    const result = this.product;
-    this.reset();
-    return result;
-  }
+class Customer implements ICostumer {
+  constructor(
+    public firstName: string,
+    public lastName: string,
+    public email: string,
+    public phoneNumber: string
+  ) {}
 }
 
-class Director {
-  private builder!: Builder;
+class CostumerBuilder implements ICostumerBuilder {
+  private firstName: string = "";
+  private lastName: string = "";
+  private email: string = "";
+  private phoneNumber: string = "";
 
-  public setBuilder(builder: Builder): void {
-    this.builder = builder;
+  public setFirstName(firstName: string): ICostumerBuilder {
+    this.firstName = firstName;
+    return this;
+  }
+  public setLastName(lastName: string): ICostumerBuilder {
+    this.lastName = lastName;
+    return this;
+  }
+  public setEmail(email: string): ICostumerBuilder {
+    this.email = email;
+    return this;
+  }
+  public setPhoneNumber(phoneNumber: string): ICostumerBuilder {
+    this.phoneNumber = phoneNumber;
+    return this;
   }
 
-  public buildMinimumProduct(): void {
-    this.builder.setPartA();
-  }
-
-  public buildFullProduct(): void {
-    this.builder.setPartA();
-    this.builder.setPartB();
-    this.builder.setPartC();
+  public build(): ICostumer {
+    return new Customer(
+      this.firstName,
+      this.lastName,
+      this.email,
+      this.phoneNumber
+    );
   }
 }
 
-const builder = new ConcreteBuilder();
-const director = new Director();
-director.setBuilder(builder);
+class CustomerDirector {
+  constructor(private builder: ICostumerBuilder) {}
+  public buildMinimalCustomer(
+    firstName: string,
+    lastName: string,
+    email: string
+  ) {
+    return this.builder
+      .setEmail(email)
+      .setFirstName(firstName)
+      .setLastName(lastName)
+      .build();
+  }
+}
 
-director.buildMinimumProduct();
-let minProduct = builder.getProduct();
-console.log(minProduct);
-
-director.buildFullProduct();
-let fullProduct = builder.getProduct();
-console.log(fullProduct);
+const builder = new CostumerBuilder();
+const director = new CustomerDirector(builder);
+const customer = director.buildMinimalCustomer("Jhon", "Doe", "jhon@mail.com");
+console.log(customer);
