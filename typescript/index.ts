@@ -111,3 +111,18 @@ const lights = new Lights();
 const homeTheater = new HomeTheaterFacade(amplifier, dvd, projector, lights);
 
 homeTheater.watchMovie("Interstellar", 10, 5);
+
+//Advantages
+// 1 - simplified interfaces
+// 2 - Reduced dependencies
+// 3 - decoupling of subsystemas and client
+// 4 - Easier to use
+// 5 - Promotes layering
+
+// Caveats or limitations
+// 1 - Over abstraction - can lead to unnecessary level of abstraction
+// 2 - Limited flexibility - facades limit access to full functionality of the subsystem
+
+//Applications
+// E-commerce systems: simplifies client interactions with subsystems like inventory management, payment ProcessingInstruction, shipping
+// Banking system
